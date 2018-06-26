@@ -1,0 +1,37 @@
+{
+  "name": "plugins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm-run-all test*",
+    "test:html": "nu-html-checker *.html",
+    "init-project": "npm install && npm-run-all init:*",
+    "init:dirs": "mkdir -p sass css vendor images js",
+    "init:files": "touch README.md index.html sass/style.scss js/script.js",
+    "init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore",
+    "build": "npm-run-all build:* test",
+    "build:clean": "rimraf css/*.css",
+    "build:sass": "node-sass --output-style compact -o css sass",
+    "build:autoprefixer": "autoprefixer-cli css/style.css",
+    "build-dev:sass": "nide-sass --output-style expanded --source-map true -o css sass",
+    "watch": "npm-run-all build -p watch:*",
+    "watch:sassprefixer": "npm-run-all onchange -d 100 sass -p node-sass --output-style expanded --source-map true -o css sass -p  autoprefixer-cli -o css/style.css",
+    "watch:browsersync": "browser-sync start --server --files 'css/*.css '*.html'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maniol/plugins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maniol/plugins/issues"
+  },
+  "homepage": "https://github.com/maniol/plugins#readme",
+  "devDependencies": {
+    "browser-sync": "^2.24.4",
+    "npm-run-all": "^4.1.3"
+  }
+}
