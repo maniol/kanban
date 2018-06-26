@@ -49,6 +49,7 @@ body {
         padding: 0; }
         body .board .column .column-card-list .card {
           background-color: #fe8a71;
-          padding: 5px; }
+          padding: 5px;
+          margin: 5px; }
 
 /*# sourceMappingURL=style.css.map */
