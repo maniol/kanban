@@ -3,26 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<title>Kanban board</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="board" class="board">
-		<h1>Kanban board</h1>
-		<button class="create-column">Add a column</button>
-		<div class="column-container"></div>
-	</div>
+	<button class="create-board">Add a board</button>
+	<script id="board-template" type="x-tmpl-mustache">
+		<div class="board">
+			<h1 class="board-title">{{ name }}</h2>
+			<button class="create-column">Add a column</button>
+			<div class="column-container"></div>
+		</div>
+	</script>
 	<script id="column-template" type="x-tmpl-mustache">
 		<div class="column">
-				<h2 class="column-title">{{ name }}</h2>
-				<ul id="{{ id }}" class="column-card-list"></ul>
-				<button class="btn-delete">X</button>
-				<button class="add-card">Add a card</button>
+			<h2 class="column-title">{{ name }}</h2>
+			<ul id="{{ id }}" class="column-card-list"></ul>
+			<button class="btn-delete">X</button>
+			<button class="add-card">Add a card</button>
 		</div>
 	</script>
 	<script id="card-template" type="x-tmpl-mustache">
 		<div class="card" style="background-color:{{ color }};">
-			<p class="card-description">{{ description }}</p>
+		  <p class="card-description">{{ description }}</p>
 			<button class="btn-delete">x</button>
 		</div
 	</script>

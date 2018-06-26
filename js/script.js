@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	function initSortable(id) {
 		var el = document.getElementById(id);
-		console.log(id);
 		var sortable = Sortable.create(el, {
 			group: 'kanban',
 			sort: true
@@ -64,29 +63,47 @@ document.addEventListener('DOMContentLoaded', function() {
 			this.element.parentNode.removeChild(this.element);
 		}
 	}
-	var board = {
-		name: 'Kanban board',
-		element: document.querySelector('#board .column-container'),
+	function Board(name) {
+		var self = this;
+		this.id = randomString();
+		this.boardName = name;
+		this.element = generateTemplate('board-template', { name: this.boardName }, 'board');
+		this.element.querySelector('.board').addEventListener('click', function (event) {
+			if (event.target.classList.contains('create-column')) {
+				var columnName = prompt("Enter the name of the column");
+				self.addColumn(new Column(columnName));
+			}
+		});
+	}
+	Board.prototype = {
+		addBoard: function() {
+			var HTMLbody = document.querySelector('body');
+			HTMLbody.appendChild(this.element)
+		},
 		addColumn: function(column) {
-			this.element.appendChild(column.element);
+			var HTMLcolumnContainer = this.element.querySelector('.column-container');
+			HTMLcolumnContainer.appendChild(column.element);
 			initSortable(column.id);
 		}
-	};
-	document.querySelector('#board .create-column').addEventListener('click', function() {
-		var name = prompt('Enter a column name');
-		var column = new Column(name);
-		console.log(column)
-		board.addColumn(column);
+	}
+	document.querySelector('.create-board').addEventListener('click', function() {
+		var name = prompt('Enter a board name');
+		var board = new Board(name);
+		board.addBoard();
 	});
+	// CREATING BOARD
+	var kanbanBoard = new Board('Kanban')
+	// ADDING BOARD TO PAGE
+	kanbanBoard.addBoard();
 	// CREATING COLUMNS
 	var todoColumn = new Column('To do');
 	var doingColumn = new Column('Doing');
 	var doneColumn = new Column('Done');
 
 	// ADDING COLUMNS TO THE BOARD
-	board.addColumn(todoColumn);
-	board.addColumn(doingColumn);
-	board.addColumn(doneColumn);
+	kanbanBoard.addColumn(todoColumn);
+	kanbanBoard.addColumn(doingColumn);
+	kanbanBoard.addColumn(doneColumn);
 
 	// CREATING CARDS
 	var card1 = new Card('New task');
